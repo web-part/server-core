@@ -1,0 +1,23 @@
+{
+  "name": "@webpart/server",
+  "version": "0.1.4",
+  "description": "",
+  "main": "index.js",
+  "scripts": {},
+  "keywords": [],
+  "author": "micty",
+  "email": "mictydeng@qq.com",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/web-part/server.git"
+  },
+  "dependencies": {
+    "@definejs/object": "^1.0.6",
+    "colors": "^1.4.0",
+    "express": "^4.17.1",
+    "http-proxy-middleware": "^1.0.6",
+    "open": "^7.3.0",
+    "qr-image": "^3.2.0"
+  }
+}
