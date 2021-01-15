@@ -19,8 +19,8 @@ module.exports = {
         let { port, qr, proxy, statics, } = config;
 
         let app = express();
-        let host = Host.get();
-        let networkUrl = `http://${host}:${port}`; //如 `http://192.168.0.100:8001`。
+        let host = Host.get() || 'localhost';       //有可能为空。
+        let networkUrl = `http://${host}:${port}`;  //如 `http://192.168.0.100:8001`。
 
         //映射虚拟的静态目录。
         let dests = Static.use(app, statics);
@@ -34,8 +34,8 @@ module.exports = {
 
         app.listen(port, () => {
             console.log(`webpart server is running at`.bold.green);
-            console.log('  local:'.bold, `http://localhost:${port}`.cyan);
-            console.log('network:'.bold, `${networkUrl}`.cyan);
+            console.log('  local:'.bold, `http://localhost:${port}`.underline.cyan);
+            console.log('network:'.bold, `${networkUrl}`.underline.cyan);
 
             //至少有一项非根目录被设置成了虚拟目录。
             if (dests.length > 0 && dests[0] != '/') {
@@ -52,7 +52,7 @@ module.exports = {
                 }
 
                 if (dest != '/') {
-                    console.log(`  ${networkUrl}${dest}`.cyan);
+                    console.log(`  `, `${networkUrl}${dest}`.underline.cyan);
                 }
             });
 
