@@ -1,6 +1,6 @@
 {
   "name": "@webpart/server",
-  "version": "0.1.6",
+  "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {},
@@ -13,7 +13,7 @@
     "url": "https://github.com/web-part/server.git"
   },
   "dependencies": {
-    "@definejs/object": "^1.0.6",
+    "@definejs/object": "^1.1.0",
     "colors": "^1.4.0",
     "express": "^4.17.1",
     "http-proxy-middleware": "^1.0.6",
