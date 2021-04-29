@@ -17,8 +17,6 @@ module.exports = {
             all = [...all, ...list,];
         }
 
-       
-
         let item = all.find(function (item, index) {
             return !item.internal &&
                 item.family == 'IPv4' &&

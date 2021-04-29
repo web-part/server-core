@@ -1,19 +1,19 @@
-# @webpart/server
+# @webpart/server-core
 
-用于开发阶段的本地 web 服务器。
+用于开发阶段的本地 web 服务器的核心部分。
 
 ## 安装
 ``` bash
-npm install --save-dev @webpart/server
+npm install --save-dev @webpart/server-core
 ```
 
 ## 示例
 ``` javascript
 
-const server = require('@webpart/server');
+const server = require('@webpart/server-core');
 
-const config = {
-    port: 8001, //必选，端口号。
+let config = {
+    port: 'auto', //必选，端口号。
     open: true, //可选，是否自动打开浏览器。
 
     //可选。
@@ -50,7 +50,7 @@ const config = {
     },
 };
 
-const app = server.start(config, function () {
+const app = server.start(config, function (info) {
     console.log('done.');
 });
 

@@ -1,6 +1,6 @@
 {
-  "name": "@webpart/server",
-  "version": "2.0.0",
+  "name": "@webpart/server-core",
+  "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {},
@@ -10,7 +10,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/web-part/server.git"
+    "url": "https://github.com/web-part/server-core.git"
   },
   "dependencies": {
     "@definejs/object": "^1.1.0",
