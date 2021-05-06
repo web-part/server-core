@@ -17,10 +17,7 @@ const express = require('express');
 
 module.exports = {
 
-
-    use(app, key$dirs) { 
-        let cwd = process.cwd();
-
+    use(app, key$dirs) {
         //静态目录。
         let list = Object.keys(key$dirs).map((key) => {
             let dirs = key$dirs[key];
@@ -38,10 +35,10 @@ module.exports = {
                 key = '/' + key;
             }
 
-            //多个目录可以映射到同一个虚拟目录。
-            //访问静态资源文件时，express.static 中间件函数会根据目录的添加顺序查找所需的文件。
+            //多个静态目录可以映射到同一个虚拟目录。
+            //即一个虚拟目录可以映射到多个静态目录。
+            //访问静态资源文件时，express.static() 中间件函数会根据目录的添加顺序查找所需的文件。
             dirs.forEach((dir) => {
-                dir = path.join(cwd, dir);
                 app.use(key, express.static(dir));
             });
 
