@@ -1,5 +1,7 @@
 
-const colors = require('colors');
+require('colors');
+
+const console = require('@webpart/console');
 const express = require('express');
 const openUrl = require('open');
 
