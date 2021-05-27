@@ -3,97 +3,45 @@ require('colors');
 
 const console = require('@webpart/console');
 const express = require('express');
-const openUrl = require('open');
 
 const Host = require('./modules/Host');
 const Port = require('./modules/Port');
-const QR = require('./modules/QR');
-const Proxy = require('./modules/Proxy');
-const Static = require('./modules/Static');
 
 const BEGIN_PORT = 3000; //默认的开始端口号。
 
 
 
-function start({ port, qr, proxy, statics, done, open, }) {
-    let app = express();
-    let host = Host.get();       //有可能为空。
-
-    //映射虚拟的静态目录。
-    let dests = Static.use(app, statics);
-
-
-    //代理。
-    if (proxy) {
-        Proxy.use(app, proxy);
-    }
-
-
-    function process(host, dest) {
-        let url = `http://${host}:${port}${dest}`;
-
-        if (qr) {
-            QR.use(app, {
-                'path': `${qr.path}${dest}`, //如 `/qr/htdocs`。
-                'size': qr.size,
-                'url': url, //如 `http://localhost:8001/htdocs`。
-            });
-        }
-
-        console.log(`  `, url.underline.cyan);
-    }
-
-
-    app.listen(port, () => {
-        console.log(`webpart server is running at`.bold.green);
-
-
-        console.log('local:'.bold);
-
-        dests.forEach((dest) => {
-            process('localhost', dest);
-        });
-
-
-        if (host) {
-            console.log('network:'.bold);
-
-            dests.forEach((dest) => {
-                process(host, dest);
-            });
-        }
-
-
-        if (open === true) {
-            openUrl(`http://localhost:${port}`, {});
-        }
-
-
-        done && done(app, {
-            'port': port,
-            'host': host,
-            'dests': dests,
-        });
-    });
-}
-
-
+//
 module.exports = {
-    start(config, done) {
-        let {
-            port = 'auto',
-            beginPort = BEGIN_PORT,
-            open,
-            qr,
-            proxy,
-            statics,
-        } = config;
+    Host,
+    Port,
+
+    /**
+    * 根据指定的端口号创建一个服务器并启动它。
+    * 已重载 start(done);
+    * 已重载 start(opt, done);
+    * @param {object} opt 可选，配置选项。
+    * @param {number} opt.port 端口号。
+    * @param {number} opt.beginPort 当 port 为 `auto` 时，开始搜索的端口号。
+    * @param {function} done 启动服务器成功后要执行的回调函数。
+    */
+    start(opt, done) {
+        //重载 start(done);
+        if (typeof opt == 'function') {
+            done = opt;
+            opt = null;
+        }
+
+
+        let { port, beginPort, } = opt || {};
+
+        beginPort = beginPort || BEGIN_PORT;
 
 
         //不指定或指定为 `auto`，则从指定的端口号开始，自动检测可用的端口号。
         if (!port || port == 'auto') {
             Port.next(beginPort, function (port) {
-                next(port);
+                doStart(port);
             });
             return;
         }
@@ -101,19 +49,24 @@ module.exports = {
         //否则检测指定的端口号。
         Port.test(port, function (availabe) {
             if (availabe) {
-                next(port);
+                doStart(port);
                 return;
             }
 
             console.log(`Error:`.bold.red, `port ${port.toString().bold.italic} has been used.`.red);
-            console.log(`Use option '-p auto' to find an availabe port.`.blue);
         });
 
 
-        function next(port) {
-            start({ port, qr, proxy, statics, open, done, });
-        }
+        function doStart(port) {
+            let app = express();
+            let host = Host.get();       //有可能为空串。
 
+            app.listen(port, () => {
+                let server = { port, host, };
+
+                done && done(app, server);
+            });
+        }
 
 
 

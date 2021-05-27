@@ -6,8 +6,11 @@ module.exports = exports = {
 
     /**
     * 检测指定的端口号是否可用。
-    * @param {*} port 
-    * @param {*} fn 
+    * @param {number} port 要检测的端口号。
+    * @param {function} fn 检测完成后要执行的回调函数。 
+    *   fn(available)：
+    *       available: true，表示端口号可用。
+    *       available: false，表示端口号不可用。
     */
     test(port, fn) {
         let server = net.createServer();
@@ -32,7 +35,9 @@ module.exports = exports = {
     /**
     * 从指定的端口号开始检测是否可用，直到找到一个可用的为止。
     * @param {number} port 开始检测的端口号。 
-    * @param {function} fn 回调函数。 
+    * @param {function} fn 检测成功后要执行的回调函数。
+    *   fn(port):
+    *       port: 通过检测得到的可用的端口号。
     */
     next(port, fn) {
         exports.test(port, function (availabe) {
@@ -40,7 +45,7 @@ module.exports = exports = {
                 fn(port);
             }
             else {
-                exports.find(port + 1, fn);
+                exports.next(port + 1, fn);
             }
         });
     },
