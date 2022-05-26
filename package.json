@@ -1,6 +1,6 @@
 {
   "name": "@webpart/server-core",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "description": "",
   "main": "index.js",
   "scripts": {},
@@ -13,7 +13,7 @@
     "url": "https://github.com/web-part/server-core.git"
   },
   "dependencies": {
-    "@webpart/console": "^2.0.2",
+    "@webpart/console": "^2.1.1",
     "colors": "^1.4.0",
     "express": "^4.17.1"
   }
