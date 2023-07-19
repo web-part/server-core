@@ -1,7 +1,7 @@
 {
   "name": "@webpart/server-core",
-  "version": "2.0.2",
-  "description": "",
+  "version": "2.0.3",
+  "description": "用于开发阶段的本地 web 服务器的核心部分。",
   "main": "index.js",
   "scripts": {},
   "keywords": [],
@@ -13,7 +13,7 @@
     "url": "https://github.com/web-part/server-core.git"
   },
   "dependencies": {
-    "@webpart/console": "^2.1.1",
+    "@webpart/console": "^3.0.2",
     "colors": "^1.4.0",
     "express": "^4.17.1"
   }
